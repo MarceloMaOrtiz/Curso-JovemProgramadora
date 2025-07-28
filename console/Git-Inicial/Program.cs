@@ -12,6 +12,7 @@ namespace Git_Inicial
         {
             // escreva("Marcelo! Boa noite!")
             Console.WriteLine("Marcelo! Boa noite!");
+            Console.ReadLine();
         }
     }
 }
