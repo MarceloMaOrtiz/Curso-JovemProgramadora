@@ -1,4 +1,6 @@
-﻿char opcao;
+﻿using Lista03.Exercicios;
+
+char opcao;
 
 do
 {
