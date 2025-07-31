@@ -17,7 +17,7 @@ namespace lista01
 
             do
             {
-                Console.WriteLine("\n\n #### Menu - Lista 01 ####");
+                Console.WriteLine("\n\n #### Menu - Lista 01 - Estrutura Sequencial ####");
                 Console.WriteLine(" 1 - Área do Retângulo");
                 Console.WriteLine(" 2 - Converter Celsius para Fahrenheit");
                 Console.WriteLine(" 3 - Média Simples");
