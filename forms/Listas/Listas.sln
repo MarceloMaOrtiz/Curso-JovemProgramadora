@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppListas", "AppListas\AppL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsListas", "ModelsListas\ModelsListas.csproj", "{E343EFAA-836B-43C7-834D-464FD7F8F033}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataListas", "DataListas\DataListas.csproj", "{8F95A15D-D8AB-403D-BD91-F73BF9A3890D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E343EFAA-836B-43C7-834D-464FD7F8F033}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E343EFAA-836B-43C7-834D-464FD7F8F033}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E343EFAA-836B-43C7-834D-464FD7F8F033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F95A15D-D8AB-403D-BD91-F73BF9A3890D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F95A15D-D8AB-403D-BD91-F73BF9A3890D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F95A15D-D8AB-403D-BD91-F73BF9A3890D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F95A15D-D8AB-403D-BD91-F73BF9A3890D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
