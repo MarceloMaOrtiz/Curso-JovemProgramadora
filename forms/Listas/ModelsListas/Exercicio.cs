@@ -2,25 +2,25 @@
 
 namespace ModelsListas
 {
-	public class Exercicio
-	{
-		private static int proximoId = 1;
+    public class Exercicio
+    {
 
-		public int Id { get; private set };
-		public string Nome { get; private set };
-		public string Titulo { get; private set };
-		public string Descricao { get; private set };
-		public string Resposta { get; private set };
+        public int Id { get; private set };
+        public string Nome { get; private set };
+        public string Titulo { get; private set };
+        public string Descricao { get; private set };
+        public string Resposta { get; private set };
 
-		public Exercicio(string nome, string titulo, string descricao, string resposta)
-		{
-			this.Id = proximoId;
-			this.Nome = nome;
-			this.Titulo = titulo;
-			this.Descricao = descricao;
-			this.Resposta = resposta;
-			proximoId++;
-		}
+        public DateTime DataCriacao { get : private set };
+        public DateTime DataAtualizacao { get : private set };
 
-	}
+        public Exercicio(string nome, string titulo, string descricao, string resposta)
+        {
+            this.Nome = nome;
+            this.Titulo = titulo;
+            this.Descricao = descricao;
+            this.Resposta = resposta;
+        }
+
+    }
 }

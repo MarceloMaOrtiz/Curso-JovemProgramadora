@@ -2,25 +2,25 @@
 {
     public class Lista
     {
-        private static int proximoId = 1;
 
-        private int _id;
-        private string _nome;
-        private string _descricao;
-        private int _qtdQuestoes;
+        public int Id { get; private set; }
+        public string Nome { get; private set; }
+        public string Descricao { get; private set; }
+        public DateTime DataCriacao { get; private set; }
+        public DateTime DataAtualizacao { get; private set; }
 
-        Lista<Exercicio> exercicios = new List<Exercicio>();
+        public List<Exercicio> Exercicios { get; set; } = new();
 
         public Lista(string nome, string descricao)
         {
-            this._nome = nome;
-            this._descricao = descricao;
-            this._qtdQuestoes = 0;
+            this.Nome = nome;
+            this.Descricao = descricao;
+
         }
 
         public void AddExercicio(Exercicio exercicio)
         {
-            this.exercicios.Add(exercicio);
+            this.Exercicios.Add(exercicio);
         }
     }
 }
