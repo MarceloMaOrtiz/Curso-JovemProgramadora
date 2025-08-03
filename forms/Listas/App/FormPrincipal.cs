@@ -1,4 +1,4 @@
-namespace AppListas
+namespace App
 {
     public partial class formPrincipal : Form
     {

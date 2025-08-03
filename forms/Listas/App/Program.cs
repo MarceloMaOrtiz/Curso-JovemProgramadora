@@ -1,4 +1,4 @@
-namespace AppListas
+namespace App
 {
     internal static class Program
     {

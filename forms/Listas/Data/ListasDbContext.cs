@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using ModelsListas;
+using Models;
 
-namespace DataListas
+namespace Data
 {
     public class ListasDbContext : DbContext
     {

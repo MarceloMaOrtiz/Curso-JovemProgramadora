@@ -1,4 +1,4 @@
-﻿namespace AppListas
+﻿namespace App
 {
     partial class formPrincipal
     {
