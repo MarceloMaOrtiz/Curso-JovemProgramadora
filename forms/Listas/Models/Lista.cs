@@ -4,12 +4,12 @@
     {
 
         public int Id { get; private set; }
+
+        public List<Exercicio> Exercicios { get; set; } = new();
         public string Nome { get; private set; }
         public string Descricao { get; private set; }
         public DateTime DataCriacao { get; private set; }
         public DateTime DataAtualizacao { get; private set; }
-
-        public List<Exercicio> Exercicios { get; set; } = new();
 
         public Lista(string nome, string descricao)
         {
