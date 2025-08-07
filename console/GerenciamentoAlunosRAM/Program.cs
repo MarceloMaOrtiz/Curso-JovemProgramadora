@@ -14,15 +14,17 @@ namespace GerenciamentoAlunosRAM
         private static int CUR_ALUNO = 0;
         public static void menu()
         {
-            Console.Write("\n\n##### MENU - Aluno #####\n");
-            Console.Write("\t1- Cadastrar\n");
-            Console.Write("\t2- Remover\n");
-            Console.Write("\t3- Buscar por CPF\n");
-            Console.Write("\t4- Listar todos\n");
-            Console.Write("\t5- Listar Aprovados\n");
-            Console.Write("\t6- Listar Reprovados\n");
-            Console.Write("\t7- Encerrar\n");
-            Console.Write("Opção: ");
+            Console.Write(
+@"##### MENU - Aluno #####
+    1- Cadastrar
+    2- Remover
+    3- Buscar por CPF
+    4- Listar todos
+    5- Listar Aprovados
+    6- Listar Reprovados
+    7- Encerrar
+        Opção: "
+            );
         }
 
         public static bool validarCPF(string[][] matriz, string cpf)
