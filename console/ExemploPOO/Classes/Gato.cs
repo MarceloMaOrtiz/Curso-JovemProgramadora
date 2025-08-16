@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExemploPOO
+namespace ExemploPOO.Classes
 {
     public class Gato : Animal
     {
@@ -18,6 +18,12 @@ namespace ExemploPOO
             base(nome, idade, especie, classe, vivo)
         {
             this.CorOlhos = corOlhos;
+        }
+
+        public override void EmitirSom()
+        {
+            base.EmitirSom();
+            Console.WriteLine("Miau");
         }
     }
 }

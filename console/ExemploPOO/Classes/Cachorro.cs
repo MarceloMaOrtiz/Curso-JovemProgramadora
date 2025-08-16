@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExemploPOO
+namespace ExemploPOO.Classes
 {
 	public class Cachorro : Animal
 	{
@@ -14,6 +14,12 @@ namespace ExemploPOO
             base(nome, idade, especie, classe, vivo)
         {
             this.Peso = peso;
+        }
+
+        public override void EmitirSom()
+        {
+            base.EmitirSom();
+            Console.WriteLine("Au Au");
         }
     }
 }

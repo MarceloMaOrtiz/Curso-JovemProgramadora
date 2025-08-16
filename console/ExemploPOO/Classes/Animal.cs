@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExemploPOO
+namespace ExemploPOO.Classes
 {
     public class Animal
     {
         //public string Nome { get; set; }
-        public int Idade { get; protected set; }
+        public int Idade { get; private set; }
 
         public string nome;
+        //private int Idade;
         public string especie;
         public string classe;
         public bool vivo;
@@ -19,10 +20,19 @@ namespace ExemploPOO
         public Animal()
         { }
 
+        public Animal(string nome, string especie, string classe)
+        {
+            this.nome = nome;
+            this.Idade = 0; // Quando idade = 0, significa que não sabemos a idade real
+            this.especie = especie;
+            this.classe = classe;
+            this.vivo = true;
+        }
+
         public Animal(string nome, int idade, string especie, string classe, bool vivo)
         {
             this.nome = nome;
-            this.SetIdade(idade);
+            this.Idade = idade;
             this.especie = especie;
             this.classe = classe;
             this.vivo = vivo;
@@ -40,9 +50,9 @@ namespace ExemploPOO
             }
         }
 
-        public void EmitirSom()
+        public virtual void EmitirSom()
         {
-            Console.WriteLine("Som de animal");
+            Console.Write($"{this.nome} está emitindo um som: ");
         }
     }
 }
