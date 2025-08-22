@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Services;
+using Services.Dto;
 
 namespace ConsoleUI.UI
 {
@@ -11,7 +12,9 @@ namespace ConsoleUI.UI
     {
         public static void CadastroAluno()
         {
-            string cpf;
+            string cpf, nome;
+            double media;
+            DateOnly dt_nascimento;
 
             Console.WriteLine("Preencha as informações a seguir:\nCPF: ");
             cpf = Console.ReadLine();
@@ -47,24 +50,44 @@ namespace ConsoleUI.UI
 
             if (!ServicesAluno.ExisteCpf(cpf))
             {
-                cpf = matriz[cadastro, 2];
-
-                Console.WriteLine("Nome:");
-                matriz[cadastro, 0] = Console.ReadLine();
+                Console.Write("Nome: ");
+                nome = Console.ReadLine();
 
                 Console.WriteLine("Data de nascimento:");
-                matriz[cadastro, 1] = Console.ReadLine();
+                dt_nascimento = DateOnly.Parse(Console.ReadLine());
 
                 Console.WriteLine("Média:");
-                matriz[cadastro, 3] = Console.ReadLine();
+                media = Convert.ToDouble(Console.ReadLine());
 
-                matriz[cadastro, 4] = "true";
+                AlunoDto dto = new AlunoDto
+                {
+                    Nome = nome,
+                    Cpf = cpf,
+                    DataNascimento = dt_nascimento,
+                    Media = media,
+                    Ativo = true
+                };
 
-                Console.WriteLine($"Aluno {matriz[cadastro, 0]} cadastrado com sucesso!\n");
-
-                cadastro++;
+                ServicesAluno.CadastrarAluno(dto);
             }
         }
 
+        public static void ListarAtivos()
+        {
+            if (!ServicesAluno.ListaVazia())
+            {
+                List<AlunoDto> alunos = ServicesAluno.ListarAlunos();
+
+                Console.WriteLine("\nLista de Alunos Ativos:");
+                foreach (AlunoDto dto in alunos)
+                {
+                    Console.WriteLine($"Nome: {dto.Nome} - Data de nascimento: {dto.DataNascimento} - CPF: {dto.Cpf} - Média: {dto.Media}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nNão existem alunos cadastrados!");
+            }
+        }
     }
 }

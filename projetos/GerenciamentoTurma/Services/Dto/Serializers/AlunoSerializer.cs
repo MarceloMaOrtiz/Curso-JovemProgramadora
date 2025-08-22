@@ -34,5 +34,25 @@ namespace Services.Dto.Serializers
                 Ativo = alunoDto.Ativo
             };
         }
+
+        public static List<AlunoDto> AlunosToDtos(List<Aluno> alunos)
+        {
+            List<AlunoDto> dtos = new List<AlunoDto>();
+            foreach (var aluno in alunos)
+            {
+                dtos.Add(AlunoToDto(aluno));
+            }
+            return dtos;
+        }
+
+        public static List<Aluno> DtosToAlunos(List<AlunoDto> dtos)
+        {
+            List<Aluno> alunos = new List<Aluno>();
+            foreach (var dto in dtos)
+            {
+                alunos.Add(DtoToAluno(dto));
+            }
+            return alunos;
+        }
     }
 }
