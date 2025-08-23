@@ -2,8 +2,11 @@
 
 int menu;
 
+//UIAluno.TestarConexao();
+
 do
 {
+
     Console.Write("\n\n Menu Principal:\n1 - Cadastrar aluno\n2 - Remover Aluno\n3 - Buscar Aluno\n4 - Listar todos os Alunos\n5 - Listar Alunos Aprovados\n6 - Listar Alunos Reprovados\n7 - Sair\nOpção: ");
     menu = Convert.ToInt32(Console.ReadLine());
 

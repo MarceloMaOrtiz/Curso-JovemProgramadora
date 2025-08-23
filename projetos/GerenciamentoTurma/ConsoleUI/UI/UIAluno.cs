@@ -10,6 +10,18 @@ namespace ConsoleUI.UI
 {
     public static class UIAluno
     {
+
+        public static void TestarConexao()
+        {
+            if (ServicesAluno.TestarConexao())
+            {
+                Console.WriteLine("Conectado");
+            }
+            else
+            {
+                Console.WriteLine("Desconectado");
+            }
+        }
         public static void CadastroAluno()
         {
             string cpf, nome;
@@ -74,20 +86,27 @@ namespace ConsoleUI.UI
 
         public static void ListarAtivos()
         {
-            if (!ServicesAluno.ListaVazia())
-            {
-                List<AlunoDto> alunos = ServicesAluno.ListarAlunos();
+            
+            (List<AlunoDto> alunos, bool sucesso, string mensagem) = ServicesAluno.ListarAlunos();
 
+            if (!sucesso)
+            {
+                Console.WriteLine($"Erro ao listar alunos: {mensagem}");
+            }
+
+            if (alunos.Count == 0)
+            {
+                Console.WriteLine("Nenhum aluno ativo encontrado.");
+            }
+            else
+            {
                 Console.WriteLine("\nLista de Alunos Ativos:");
                 foreach (AlunoDto dto in alunos)
                 {
                     Console.WriteLine($"Nome: {dto.Nome} - Data de nascimento: {dto.DataNascimento} - CPF: {dto.Cpf} - Média: {dto.Media}");
                 }
             }
-            else
-            {
-                Console.WriteLine("\nNão existem alunos cadastrados!");
-            }
+            
         }
     }
 }

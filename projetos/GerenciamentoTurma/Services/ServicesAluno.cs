@@ -9,6 +9,11 @@ namespace Services
     {
         public static List<AlunoDto> listaAlunos = new List<AlunoDto>();
 
+        public static bool TestarConexao()
+        {
+            return RepositoryAluno.TestarConexao();
+        }
+
         public static bool ListaVazia()
         {
             if (listaAlunos.Count == 0)
@@ -35,11 +40,11 @@ namespace Services
 
         }
 
-        public static List<AlunoDto> ListarAlunos()
+        public static (List<AlunoDto>, bool, string) ListarAlunos()
         {
-            // TODO: Implementar a lógica para listar alunos ativos no BD.
+            (List<Aluno> listaAlunos, bool sucesso, string mensagem) = RepositoryAluno.ListarAlunos();
 
-            return listaAlunos;
+            return (AlunoSerializer.AlunosToDtos(listaAlunos), sucesso, mensagem);
         }
     }
 }
