@@ -14,14 +14,20 @@ namespace AlunosConsole
 
         public static void TestarConexao()
         {
-            RespostaServico<object> resposta = Services.TestarConexao();
+            RespostaServico<bool> resposta = Services.TestarConexao();
             Console.WriteLine(resposta.Mensagem);
-            Console.WriteLine(resposta.Sucesso);
+            Console.WriteLine(resposta.Objeto);
         }
 
         public static void LimpaTela()
         {
             Console.Clear();
+        }
+
+        public static void Pause()
+        {
+            Console.WriteLine("Pressione qualquer tecla para continuar...");
+            Console.ReadLine();
         }
 
         public static void CadastrarAluno()
@@ -36,7 +42,7 @@ namespace AlunosConsole
                 cpf = Console.ReadLine() ?? string.Empty;
             } while (string.IsNullOrWhiteSpace(cpf));
 
-            if (!Services.ExisteCpf(cpf))
+            if (!Services.ExisteCpf(cpf).Objeto)
             {
 
                 Console.Write("Nome: ");
@@ -109,27 +115,47 @@ namespace AlunosConsole
 
         public static void ListarAtivos()
         {
-            (List<AlunoDto> alunos, bool sucesso, string msg) = Services.ListarAtivos();
+            RespostaServico<List<AlunoDto>> resposta = Services.ListarAtivos();
 
-            if (sucesso)
+            if (resposta.Sucesso && resposta.Objeto != null)
             {
-                if (alunos.Count == 0)
+                if (resposta.Objeto.Count == 0)
                 {
                     Console.WriteLine("\nNão existem alunos cadastrados!\n");
                 }
                 else
                 {
                     Console.WriteLine("\nAlunos Ativos:\n");
-                    foreach (var aluno in alunos)
-                    {
-                        Console.WriteLine($"Nome: {aluno.Nome} | Data de Nascimento: {aluno.DataNascimento.ToString("dd/MM/yyyy")} | CPF: {aluno.Cpf} | Média: {aluno.Media}");
-                    }
-                    Console.WriteLine();
+                    Listar(resposta.Objeto);
                 }
             }
             else
             {
-                Console.WriteLine($"Erro ao listar alunos ativos: {msg}");
+                Console.WriteLine($"Erro ao listar alunos ativos: {resposta.Mensagem}");
+            }
+        }
+
+        public static void BuscarAlunoCpf()
+        {
+            string cpf;
+            Console.Write("Informe o CPF do aluno a ser buscado: ");
+            cpf = Console.ReadLine() ?? string.Empty;
+            RespostaServico<AlunoDto> resposta = Services.BuscarAlunoCpf(cpf);
+            if (resposta.Sucesso)
+            {
+                if (resposta.Objeto != null)
+                {
+                    AlunoDto aluno = resposta.Objeto;
+                    Console.WriteLine($"\nAluno encontrado:\n{aluno}\n");
+                }
+                else
+                {
+                    Console.WriteLine($"Aluno com CPF {cpf} não encontrado.");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Erro ao buscar aluno: {resposta.Mensagem}");
             }
         }
 
@@ -156,6 +182,57 @@ namespace AlunosConsole
             {
                 Console.WriteLine($"Aluno com CPF {cpf} não encontrado.");
             }
+        }
+
+        public static void ListarAprovados()
+        {
+            RespostaServico<List<AlunoDto>> resposta = Services.ListarAprovados();
+            if (resposta.Sucesso && resposta.Objeto != null)
+            {
+                if (resposta.Objeto.Count == 0)
+                {
+                    Console.WriteLine("\nNão existem alunos aprovados!\n");
+                }
+                else
+                {
+                    Console.WriteLine("\nAlunos Aprovados:\n");
+                    Listar(resposta.Objeto);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Erro ao listar alunos aprovados: {resposta.Mensagem}");
+            }
+        }
+
+        public static void ListarReprovados()
+        {
+            RespostaServico<List<AlunoDto>> resposta = Services.ListarReprovados();
+            if (resposta.Sucesso && resposta.Objeto != null)
+            {
+                if (resposta.Objeto.Count == 0)
+                {
+                    Console.WriteLine("\nNão existem alunos reprovados!\n");
+                }
+                else
+                {
+                    Console.WriteLine("\nAlunos Reprovados:\n");
+                    Listar(resposta.Objeto);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Erro ao listar alunos reprovados: {resposta.Mensagem}");
+            }
+        }
+
+        public static void Listar(List<AlunoDto> alunosDto)
+        {
+            foreach (var aluno in alunosDto)
+            {
+                Console.WriteLine(aluno.ToString());
+            }
+            Console.WriteLine();
         }
     }
 }

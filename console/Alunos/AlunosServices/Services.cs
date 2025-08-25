@@ -10,26 +10,31 @@ namespace AlunosServices
     public static class Services
     {
 
-        public static RespostaServico<object> TestarConexao()
+        public static RespostaServico<bool> TestarConexao()
         {
 
             string msg;
-            bool sucesso;
+            bool conectado, sucesso;
 
-            (sucesso, msg) = Repository.TestarConexao();
-            return new RespostaServico<object>
+            (conectado, sucesso, msg) = Repository.TestarConexao();
+            return new RespostaServico<bool>
             {
-                Objeto = null,
+                Objeto = conectado,
                 Sucesso = sucesso,
                 Mensagem = msg
             };
         }
 
-        public static bool ExisteCpf(string cpf)
+        public static RespostaServico<bool> ExisteCpf(string cpf)
         {
-            // Aqui você pode implementar a lógica de verificação de CPF
-            // Por exemplo, consultar um repositório ou banco de dados
-            return Repository.ExisteCpf(cpf);
+
+            (bool existe, bool sucesso, string msg) = Repository.ExisteCpf(cpf);
+
+            return new RespostaServico<bool>(){
+                Objeto = existe,
+                Sucesso = sucesso,
+                Mensagem = msg
+            };
         }
 
         public static RespostaServico<AlunoDto> CadastrarAluno(AlunoDto dto)
@@ -60,7 +65,7 @@ namespace AlunosServices
             }
         }
 
-        public static (List<AlunoDto>, bool, string) ListarAtivos()
+        public static RespostaServico<List<AlunoDto>> ListarAtivos()
         {
 
             (List<Aluno> alunos, bool sucesso, string msg) = Repository.ListarAtivos();
@@ -74,7 +79,13 @@ namespace AlunosServices
                     dtoAlunos.Add(Serializer.AlunoToDto(aluno));
                 }
             }
-            return (dtoAlunos, sucesso, msg);
+
+            return new RespostaServico<List<AlunoDto>>()
+            {
+                Objeto = dtoAlunos,
+                Sucesso = sucesso,
+                Mensagem = msg
+            };
         }
 
         public static RespostaServico<AlunoDto> BuscarAlunoCpf(string cpf)
@@ -99,7 +110,6 @@ namespace AlunosServices
             };
         }
 
-
         public static RespostaServico<AlunoDto> RemoverAluno(AlunoDto dto)
         {            
             dto.Ativo = false;
@@ -112,5 +122,47 @@ namespace AlunosServices
             dto.Ativo = true;
             return AtualizarAluno(dto);
         }
+
+        public static RespostaServico<List<AlunoDto>> ListarAprovados()
+        {
+             (List<Aluno> alunos, bool sucesso, string msg) = Repository.ListarAtivos();
+
+            List<AlunoDto> dtoAlunos = new List<AlunoDto>();
+
+            foreach (var aluno in alunos)
+            {
+                if (aluno.Ativo && aluno.Media >= 7.0)
+                {
+                    dtoAlunos.Add(Serializer.AlunoToDto(aluno));
+                }
+            }
+
+            return new RespostaServico<List<AlunoDto>>()
+            {
+                Objeto = dtoAlunos,
+                Sucesso = sucesso,
+                Mensagem = msg
+            };
+        }
+
+        public static RespostaServico<List<AlunoDto>> ListarReprovados()
+        {
+            (List<Aluno> alunos, bool sucesso, string msg) = Repository.ListarAtivos();
+            List<AlunoDto> dtoAlunos = new List<AlunoDto>();
+            foreach (var aluno in alunos)
+            {
+                if (aluno.Ativo && aluno.Media < 7.0)
+                {
+                    dtoAlunos.Add(Serializer.AlunoToDto(aluno));
+                }
+            }
+            return new RespostaServico<List<AlunoDto>>()
+            {
+                Objeto = dtoAlunos,
+                Sucesso = sucesso,
+                Mensagem = msg
+            };
+        }
+
     }
 }

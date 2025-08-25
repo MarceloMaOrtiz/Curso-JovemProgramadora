@@ -24,5 +24,10 @@
             Media = media;
             Ativo = true;
         }
+
+        public override string ToString()
+        {
+            return $"Nome: {Nome} | Data de Nascimento: {DataNascimento.ToString("dd/MM/yyyy")} | CPF: {Cpf} | Média: {Media}";
+        }
     }
 }

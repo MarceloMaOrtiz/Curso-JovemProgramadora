@@ -17,8 +17,25 @@ namespace AlunosRepository
             }
         }
 
-        public static bool ExisteCpf(string cpf)
+        public static (bool, bool, string) TestarConexao()
         {
+            try
+            {
+                using (var connection = new MySqlConnection(sqlConnectionString))
+                {
+                    connection.Open();
+                    return (true, true, "Conexão bem-sucedida!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, false, $"Erro ao conectar: {ex.Message}");
+            }
+        }
+
+        public static (bool, bool, string) ExisteCpf(string cpf)
+        {
+            bool encontrado = false;
             try
             {
                 using (var connection = new MySqlConnection(sqlConnectionString))
@@ -28,14 +45,21 @@ namespace AlunosRepository
                     command.CommandText = "SELECT COUNT(*) FROM aluno WHERE cpf = @Cpf;";
                     command.Parameters.AddWithValue("@Cpf", cpf);
                     int count = Convert.ToInt32(command.ExecuteScalar());
-                    return count > 0;
+                    encontrado = count > 0;
+                }
+                if (encontrado)
+                {
+                    return (true, true, "CPF encontrado.");
+                }
+                else
+                {
+                    return (false, true, "CPF não encontrado.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro ao verificar CPF: {ex.Message}");
+                return (false, false, $"Erro ao verificar CPF: {ex.Message}");
             }
-            return false;
         }
 
         public static (Aluno, bool, string) CadastrarAluno(Aluno aluno)
@@ -86,22 +110,6 @@ namespace AlunosRepository
                 return (aluno, false, ex.Message);
             }
             return (aluno, true, $"{aluno.Nome} atualizado com sucesso.");
-        }
-
-        public static (bool, string) TestarConexao()
-        {
-            try
-            {
-                using (var connection = new MySqlConnection(sqlConnectionString))
-                {
-                    connection.Open();
-                    return (true, "Conexão bem-sucedida!");
-                }
-            }
-            catch (Exception ex)
-            {
-                return (false, $"Erro ao conectar: {ex.Message}");
-            }
         }
 
         public static (Aluno?, bool, string) BuscarAlunoCpf(string cpf)

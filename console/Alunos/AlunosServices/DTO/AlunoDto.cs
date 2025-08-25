@@ -21,5 +21,10 @@ namespace AlunosServices.DTO
         public bool Ativo { get; set; } = true;
 
         public bool Aprovado => Media >= 7;
+
+        public override string ToString()
+        {
+            return $"Nome: {Nome} | Data de Nascimento: {DataNascimento.ToString("dd/MM/yyyy")} | CPF: {Cpf} | Média: {Media}";
+        }
     }
 }
