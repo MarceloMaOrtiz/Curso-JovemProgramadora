@@ -1,4 +1,5 @@
 ﻿using AlunosConsole;
+using AlunosModels.ValueObject;
 
 int menu;
 

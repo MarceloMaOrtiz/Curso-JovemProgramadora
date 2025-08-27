@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlunosModels.ValueObject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,9 @@ namespace AlunosServices.DTO
 
         public string Nome { get; set; } = string.Empty;
 
-        public DateOnly DataNascimento { get; set; }
+        public required DataNascimento DtNascimento { get; set; }
 
-        public string Cpf { get; set; } = string.Empty;
+        public required Cpf Cpf { get; set; }
 
         public double Media { get; set; }
 
@@ -24,7 +25,7 @@ namespace AlunosServices.DTO
 
         public override string ToString()
         {
-            return $"Nome: {Nome} | Data de Nascimento: {DataNascimento.ToString("dd/MM/yyyy")} | CPF: {Cpf} | Média: {Media}";
+            return $"Nome: {Nome} | Data de Nascimento: {DtNascimento.Valor.ToString("dd/MM/yyyy")} | CPF: {Cpf} | Média: {Media}";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AlunosModels;
+using AlunosModels.ValueObject;
 using Microsoft.Extensions.Configuration;
 using MySqlConnector;
 
@@ -33,7 +34,7 @@ namespace AlunosRepository
             }
         }
 
-        public static (bool, bool, string) ExisteCpf(string cpf)
+        public static (bool, bool, string) ExisteCpf(Cpf cpf)
         {
             bool encontrado = false;
             try
@@ -43,7 +44,7 @@ namespace AlunosRepository
                     connection.Open();
                     var command = connection.CreateCommand();
                     command.CommandText = "SELECT COUNT(*) FROM aluno WHERE cpf = @Cpf;";
-                    command.Parameters.AddWithValue("@Cpf", cpf);
+                    command.Parameters.AddWithValue("@Cpf", cpf.Valor);
                     int count = Convert.ToInt32(command.ExecuteScalar());
                     encontrado = count > 0;
                 }
@@ -72,8 +73,8 @@ namespace AlunosRepository
                     var command = connection.CreateCommand();
                     command.CommandText = "INSERT INTO aluno (nome, dt_nascimento, cpf, media) VALUES (@Nome, @DataNascimento, @Cpf, @Media);";
                     command.Parameters.AddWithValue("@Nome", aluno.Nome);
-                    command.Parameters.AddWithValue("@DataNascimento", aluno.DataNascimento.ToString("yyyy-MM-dd"));
-                    command.Parameters.AddWithValue("@Cpf", aluno.Cpf);
+                    command.Parameters.AddWithValue("@DataNascimento", aluno.DtNascimento.Valor.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@Cpf", aluno.Cpf.Valor);
                     command.Parameters.AddWithValue("@Media", aluno.Media);
                     command.ExecuteNonQuery();
                     aluno.Id = (int)command.LastInsertedId;
@@ -98,8 +99,8 @@ namespace AlunosRepository
                     command.CommandText = "UPDATE aluno SET nome = @Nome, dt_nascimento = @DataNascimento, cpf = @Cpf, media = @Media, ativo = @Ativo WHERE id_aluno = @Id;";
                     command.Parameters.AddWithValue("@Id", aluno.Id);
                     command.Parameters.AddWithValue("@Nome", aluno.Nome);
-                    command.Parameters.AddWithValue("@DataNascimento", aluno.DataNascimento.ToString("yyyy-MM-dd"));
-                    command.Parameters.AddWithValue("@Cpf", aluno.Cpf);
+                    command.Parameters.AddWithValue("@DataNascimento", aluno.DtNascimento.Valor.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@Cpf", aluno.Cpf.Valor);
                     command.Parameters.AddWithValue("@Media", aluno.Media);
                     command.Parameters.AddWithValue("@Ativo", aluno.Ativo);
                     command.ExecuteNonQuery();
@@ -112,7 +113,7 @@ namespace AlunosRepository
             return (aluno, true, $"{aluno.Nome} atualizado com sucesso.");
         }
 
-        public static (Aluno?, bool, string) BuscarAlunoCpf(string cpf)
+        public static (Aluno?, bool, string) BuscarAlunoCpf(Cpf cpf)
         {
             try
             {
@@ -121,7 +122,7 @@ namespace AlunosRepository
                     connection.Open();
                     var command = connection.CreateCommand();
                     command.CommandText = "SELECT * FROM aluno WHERE cpf = @Cpf;";
-                    command.Parameters.AddWithValue("@Cpf", cpf);
+                    command.Parameters.AddWithValue("@Cpf", cpf.Valor);
                     using (var reader = command.ExecuteReader())
                     {
                         if (reader.Read())
@@ -131,8 +132,8 @@ namespace AlunosRepository
                                 {
                                     Id = reader.GetInt32("id_aluno"),
                                     Nome = reader.GetString("nome"),
-                                    DataNascimento = reader.GetDateOnly("dt_nascimento"),
-                                    Cpf = reader.GetString("cpf"),
+                                    DtNascimento = new DataNascimento(reader.GetDateOnly("dt_nascimento")),
+                                    Cpf = new Cpf(reader.GetString("cpf")),
                                     Media = reader.GetDouble("media"),
                                     Ativo = reader.GetBoolean("ativo")
                                 },
@@ -175,8 +176,8 @@ namespace AlunosRepository
                             {
                                 Id = reader.GetInt32("id_aluno"),
                                 Nome = reader.GetString("nome"),
-                                DataNascimento = reader.GetDateOnly("dt_nascimento"),
-                                Cpf = reader.GetString("cpf"),
+                                DtNascimento = new DataNascimento(reader.GetDateOnly("dt_nascimento")),
+                                Cpf = new Cpf(reader.GetString("cpf")),
                                 Media = reader.GetDouble("media"),
                                 Ativo = reader.GetBoolean("ativo")
                             };

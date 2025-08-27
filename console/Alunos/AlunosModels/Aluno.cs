@@ -1,4 +1,6 @@
-﻿namespace AlunosModels
+﻿using AlunosModels.ValueObject;
+
+namespace AlunosModels
 {
     public class Aluno
     {
@@ -6,9 +8,9 @@
 
         public string Nome { get; set; } = "";
 
-        public DateOnly DataNascimento { get; set; }
+        public required DataNascimento DtNascimento { get; set; }
 
-        public string Cpf { get; set; } = "";
+        public required Cpf Cpf { get; set; }
 
         public double Media { get; set; }
 
@@ -19,15 +21,15 @@
         public Aluno(string nome, DateOnly dataNascimento, string cpf, double media)
         {
             Nome = nome;
-            DataNascimento = dataNascimento;
-            Cpf = cpf;
+            DtNascimento = new DataNascimento(dataNascimento);
+            Cpf = new Cpf(cpf);
             Media = media;
             Ativo = true;
         }
 
         public override string ToString()
         {
-            return $"Nome: {Nome} | Data de Nascimento: {DataNascimento.ToString("dd/MM/yyyy")} | CPF: {Cpf} | Média: {Media}";
+            return $"Nome: {Nome} | Data de Nascimento: {DtNascimento.Valor.ToString("dd/MM/yyyy")} | CPF: {Cpf} | Média: {Media}";
         }
     }
 }

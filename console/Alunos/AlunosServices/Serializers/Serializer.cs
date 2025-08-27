@@ -1,4 +1,5 @@
 ﻿using AlunosModels;
+using AlunosModels.ValueObject;
 using AlunosServices.DTO;
 using System;
 using System.Collections.Generic;
@@ -10,32 +11,6 @@ namespace AlunosServices.Serializers
 {
     internal static class Serializer
     {
-        public static CreateAlunoDto AlunoToCreateDto(Aluno aluno)
-        {
-
-            return new CreateAlunoDto
-            {
-                Id = aluno.Id,
-                Nome = aluno.Nome,
-                DataNascimento = aluno.DataNascimento,
-                Cpf = aluno.Cpf,
-                Media = aluno.Media,
-                Ativo = aluno.Ativo,
-            };
-        }
-
-        public static Aluno CreateDtoToAluno(CreateAlunoDto dto)
-        {
-            return new Aluno
-            {
-                Id = dto.Id,
-                Nome = dto.Nome,
-                DataNascimento = dto.DataNascimento,
-                Cpf = dto.Cpf,
-                Media = dto.Media,
-                Ativo = dto.Ativo,
-            };
-        }
 
         public static AlunoDto AlunoToDto(Aluno aluno)
         {
@@ -44,7 +19,7 @@ namespace AlunosServices.Serializers
             {
                 Id = aluno.Id,
                 Nome = aluno.Nome,
-                DataNascimento = aluno.DataNascimento,
+                DtNascimento = aluno.DtNascimento,
                 Cpf = aluno.Cpf,
                 Media = aluno.Media,
                 Ativo = aluno.Ativo,
@@ -57,7 +32,7 @@ namespace AlunosServices.Serializers
             {
                 Id = dto.Id,
                 Nome = dto.Nome,
-                DataNascimento = dto.DataNascimento,
+                DtNascimento = dto.DtNascimento,
                 Cpf = dto.Cpf,
                 Media = dto.Media,
                 Ativo = dto.Ativo,

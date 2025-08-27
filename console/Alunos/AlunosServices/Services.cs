@@ -1,4 +1,5 @@
 ﻿using AlunosModels;
+using AlunosModels.ValueObject;
 using AlunosRepository;
 using AlunosServices.DTO;
 using AlunosServices.Serializers;
@@ -25,7 +26,7 @@ namespace AlunosServices
             };
         }
 
-        public static RespostaServico<bool> ExisteCpf(string cpf)
+        public static RespostaServico<bool> ExisteCpf(Cpf cpf)
         {
 
             (bool existe, bool sucesso, string msg) = Repository.ExisteCpf(cpf);
@@ -88,7 +89,7 @@ namespace AlunosServices
             };
         }
 
-        public static RespostaServico<AlunoDto> BuscarAlunoCpf(string cpf)
+        public static RespostaServico<AlunoDto> BuscarAlunoCpf(Cpf cpf)
         {
             (Aluno? aluno, bool sucesso, string msg) = Repository.BuscarAlunoCpf(cpf);
 
