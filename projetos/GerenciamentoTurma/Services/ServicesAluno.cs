@@ -7,44 +7,53 @@ namespace Services
 {
     public static class ServicesAluno
     {
-        public static List<AlunoDto> listaAlunos = new List<AlunoDto>();
-
         public static bool TestarConexao()
         {
             return RepositoryAluno.TestarConexao();
         }
 
-        public static bool ListaVazia()
+        public static RespostaServico<bool> ExisteCpf(string cpf)
         {
-            if (listaAlunos.Count == 0)
+            (bool existe, bool sucesso, string mensagem) = RepositoryAluno.ExisteCpf(cpf);
+
+            return new RespostaServico<bool>(existe, sucesso, mensagem);
+        }
+
+        public static RespostaServico<AlunoDto?> BuscarAlunoCpf(string cpf)
+        {
+            (Aluno? aluno, bool sucesso, string mensagem) = RepositoryAluno.BuscarAlunoCpf(cpf);
+            
+            if(aluno == null)
             {
-                return true;
+                return new RespostaServico<AlunoDto?>(null, sucesso, mensagem);
             }
-            return false;
+            return new RespostaServico<AlunoDto?>(AlunoSerializer.AlunoToDto(aluno), sucesso, mensagem);
         }
 
-        public static bool ExisteCpf(string cpf)
-        {
-            return RepositoryAluno.ExisteCpf(cpf);
-        }
-
-        public static AlunoDto CadastrarAluno(AlunoDto dto)
+        public static RespostaServico<AlunoDto> AtualizarAluno(AlunoDto dto)
         {
             Aluno aluno = AlunoSerializer.DtoToAluno(dto);
 
-            listaAlunos.Add(dto);
+            (aluno, bool sucesso, string mensagem) = RepositoryAluno.AtualizarAluno(aluno);
 
-            return dto;
-
-            //return RepositoryAluno.CadastrarAluno(aluno);
-
+            return new RespostaServico<AlunoDto>(AlunoSerializer.AlunoToDto(aluno), sucesso, mensagem);
         }
 
-        public static (List<AlunoDto>, bool, string) ListarAlunos()
+        public static RespostaServico<AlunoDto> CadastrarAluno(AlunoDto dto)
+        {
+            Aluno aluno = AlunoSerializer.DtoToAluno(dto);
+
+            
+            (aluno, bool sucesso, string mensagem) = RepositoryAluno.CadastrarAluno(aluno);
+
+            return new RespostaServico<AlunoDto>(AlunoSerializer.AlunoToDto(aluno), sucesso, mensagem);
+        }
+
+        public static RespostaServico<List<AlunoDto>> ListarAlunos()
         {
             (List<Aluno> listaAlunos, bool sucesso, string mensagem) = RepositoryAluno.ListarAlunos();
 
-            return (AlunoSerializer.AlunosToDtos(listaAlunos), sucesso, mensagem);
+            return new RespostaServico<List<AlunoDto>>(AlunoSerializer.AlunosToDtos(listaAlunos), sucesso, mensagem);
         }
     }
 }
