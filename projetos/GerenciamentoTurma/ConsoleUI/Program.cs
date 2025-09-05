@@ -2,6 +2,32 @@
 
 int menu;
 
+//int num;
+//Console.Write("Insira o num: ");
+//num = Convert.ToInt32(Console.ReadLine());
+
+try
+{
+    int num;
+    Console.Write("Insira o num: ");
+    num = Convert.ToInt32(Console.ReadLine());
+}
+catch (FormatException e)
+{
+    Console.WriteLine("Você não digitou um número.");
+    Console.WriteLine(e.Message);
+}
+catch (OverflowException)
+{
+       Console.WriteLine("Número muito grande ou muito pequeno.");
+}catch(Exception e)
+{
+    Console.WriteLine("Ocorreu um erro inesperado.");
+    Console.WriteLine(e.Message);
+}
+
+
+
 UIAluno.TestarConexao();
 
 do
@@ -15,19 +41,19 @@ do
             UIAluno.CadastroAluno();
             break;
         case 2:
-            //RemoverAluno(matriz);
+            UIAluno.RemoverAluno();
             break;
         case 3:
-            //BuscarAluno(matriz);
+            UIAluno.BuscarAluno();
             break;
         case 4:
             UIAluno.ListarAtivos();
             break;
         case 5:
-            //Media(matriz, 5);
+            UIAluno.ListarAprovados();
             break;
         case 6:
-            //Media(matriz, 6);
+            UIAluno.ListarReprovados();
             break;
         case 7:
             Console.WriteLine("\nPrograma encerrado!");
@@ -36,4 +62,5 @@ do
             Console.WriteLine("\nOpção inválida!");
             break;
     }
+    UIAluno.LimparTela();
 } while (menu != 7);

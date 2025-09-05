@@ -27,5 +27,10 @@ namespace Services.Dto
                 return Media >= 7;
             }
         }
+
+        public override string ToString()
+        {
+            return $"Nome: {Nome} - Data de nascimento: {DataNascimento} - CPF: {Cpf} - Média: {Media}";
+        }
     }
 }

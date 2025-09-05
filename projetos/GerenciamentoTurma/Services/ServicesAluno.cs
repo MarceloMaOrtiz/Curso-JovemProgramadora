@@ -30,6 +30,22 @@ namespace Services
             return new RespostaServico<AlunoDto?>(AlunoSerializer.AlunoToDto(aluno), sucesso, mensagem);
         }
 
+        public static RespostaServico<AlunoDto> DesativarAluno(AlunoDto alunoDto)
+        {
+            alunoDto.Ativo = false;
+            return AtualizarAluno(alunoDto);
+        }
+
+        public static RespostaServico<AlunoDto> CadastrarAluno(AlunoDto dto)
+        {
+            Aluno aluno = AlunoSerializer.DtoToAluno(dto);
+
+
+            (aluno, bool sucesso, string mensagem) = RepositoryAluno.CadastrarAluno(aluno);
+
+            return new RespostaServico<AlunoDto>(AlunoSerializer.AlunoToDto(aluno), sucesso, mensagem);
+        }
+
         public static RespostaServico<AlunoDto> AtualizarAluno(AlunoDto dto)
         {
             Aluno aluno = AlunoSerializer.DtoToAluno(dto);
@@ -39,14 +55,10 @@ namespace Services
             return new RespostaServico<AlunoDto>(AlunoSerializer.AlunoToDto(aluno), sucesso, mensagem);
         }
 
-        public static RespostaServico<AlunoDto> CadastrarAluno(AlunoDto dto)
+        public static RespostaServico<AlunoDto> AtivarAluno(AlunoDto alunoDto)
         {
-            Aluno aluno = AlunoSerializer.DtoToAluno(dto);
-
-            
-            (aluno, bool sucesso, string mensagem) = RepositoryAluno.CadastrarAluno(aluno);
-
-            return new RespostaServico<AlunoDto>(AlunoSerializer.AlunoToDto(aluno), sucesso, mensagem);
+            alunoDto.Ativo = true;
+            return AtualizarAluno(alunoDto);
         }
 
         public static RespostaServico<List<AlunoDto>> ListarAlunos()
@@ -54,6 +66,24 @@ namespace Services
             (List<Aluno> listaAlunos, bool sucesso, string mensagem) = RepositoryAluno.ListarAlunos();
 
             return new RespostaServico<List<AlunoDto>>(AlunoSerializer.AlunosToDtos(listaAlunos), sucesso, mensagem);
+        }
+
+        public static RespostaServico<List<AlunoDto>> ListarAprovados()
+        {
+            (List<Aluno> listaAlunos, bool sucesso, string mensagem) = RepositoryAluno.ListarAlunos();
+
+            List<Aluno> aprovados = listaAlunos.Where(aluno => aluno.Media >= 7 && aluno.Ativo).ToList();
+
+            return new RespostaServico<List<AlunoDto>>(AlunoSerializer.AlunosToDtos(aprovados), sucesso, mensagem);
+        }
+
+        public static RespostaServico<List<AlunoDto>> ListarReprovados()
+        {
+            (List<Aluno> listaAlunos, bool sucesso, string mensagem) = RepositoryAluno.ListarAlunos();
+
+            List<Aluno> aprovados = listaAlunos.Where(aluno => aluno.Media < 7 && aluno.Ativo).ToList();
+
+            return new RespostaServico<List<AlunoDto>>(AlunoSerializer.AlunosToDtos(aprovados), sucesso, mensagem);
         }
     }
 }

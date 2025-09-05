@@ -11,6 +11,12 @@ namespace ConsoleUI.UI
 {
     public static class UIAluno
     {
+        public static void LimparTela()
+        {
+            Console.WriteLine("Pressione qualquer tecla para continuar...");
+            Console.ReadLine();
+            Console.Clear();
+        }
 
         public static void TestarConexao()
         {
@@ -22,6 +28,44 @@ namespace ConsoleUI.UI
             {
                 Console.WriteLine("Desconectado");
             }
+        }
+
+        public static void RemoverAluno()
+        {
+            string cpf;
+
+            Console.Write("Informe o CPF do aluno a ser removido: ");
+            cpf = Console.ReadLine();
+
+            RespostaServico<AlunoDto?> resposta = ServicesAluno.BuscarAlunoCpf(cpf);
+
+            if (!resposta.Sucesso)
+            {
+                Console.WriteLine($"Erro ao buscar aluno: {resposta.Mensagem}");
+                return;
+            }
+            if (resposta.Objeto == null)
+            {
+                Console.WriteLine("Aluno não encontrado.");
+                return;
+            }
+
+            if (!resposta.Objeto.Ativo)
+            {
+                Console.WriteLine("Aluno já está desativado.");
+                return;
+            }
+
+            RespostaServico<AlunoDto> respostaDesativacao = ServicesAluno.DesativarAluno(resposta.Objeto);
+
+            if (!respostaDesativacao.Sucesso || respostaDesativacao.Objeto == null)
+            {
+                Console.WriteLine($"Erro ao desativar aluno: {respostaDesativacao.Mensagem}");
+                return;
+            }
+
+            Console.WriteLine($"Aluno {respostaDesativacao.Objeto.Nome} desativado com sucesso.");
+
         }
 
         public static void CadastroAluno()
@@ -45,7 +89,7 @@ namespace ConsoleUI.UI
             {
                 Console.Write("Nome: ");
                 nome = Console.ReadLine();
-
+                
                 Console.Write("Data de nascimento: ");
                 dt_nascimento = DateOnly.Parse(Console.ReadLine());
 
@@ -79,6 +123,26 @@ namespace ConsoleUI.UI
             }
         }
 
+        public static void BuscarAluno()
+        {
+            string cpf;
+            Console.Write("Informe o CPF do aluno a ser buscado: ");
+            cpf = Console.ReadLine();
+            RespostaServico<AlunoDto?> resposta = ServicesAluno.BuscarAlunoCpf(cpf);
+            if (!resposta.Sucesso)
+            {
+                Console.WriteLine($"Erro ao buscar aluno: {resposta.Mensagem}");
+                return;
+            }
+            if(resposta.Objeto == null) {
+                Console.WriteLine("Aluno não encontrado.");
+                return;
+            }
+            // SE V ? (FAZ ISSO) : (FAZ AQUILO)
+            AlunoDto dto = resposta.Objeto;
+            Console.WriteLine($"{dto} - Ativo: {(dto.Ativo ? "Sim" : "Não")}");
+        }
+
         public static void ReativarAluno(String cpf)
         {
             //(AlunoDto? dto, bool sucesso, string mensagem) = ServicesAluno.BuscarAlunoCpf(cpf);
@@ -102,9 +166,7 @@ namespace ConsoleUI.UI
                     switch (opcao)
                     {
                         case 1:
-                            respostaBusca.Objeto.Ativo = true;
-                            //(dto, sucesso, mensagem) = ServicesAluno.AtualizarAluno(dto);
-                            RespostaServico<AlunoDto> respostaAtualizacao = ServicesAluno.AtualizarAluno(respostaBusca.Objeto);
+                            RespostaServico<AlunoDto> respostaAtivacao = ServicesAluno.AtivarAluno(respostaBusca.Objeto);
                             Console.WriteLine($"Aluno {respostaBusca.Objeto.Nome} reativado com sucesso!\n");
                             break;
                         case 2:
@@ -114,6 +176,50 @@ namespace ConsoleUI.UI
                             Console.WriteLine("Opção inválida, retornando para o menu inicial.");
                             break;
                     }
+                }
+            }
+        }
+
+        public static void ListarAprovados()
+        {
+            RespostaServico<List<AlunoDto>> resposta = ServicesAluno.ListarAprovados();
+
+            if (!resposta.Sucesso)
+            {
+                Console.WriteLine($"Erro ao listar alunos: {resposta.Mensagem}");
+            }
+
+            if ((resposta.Objeto != null && resposta.Objeto.Count == 0) || resposta.Objeto == null)
+            {
+                Console.WriteLine("Nenhum aluno aprovado.");
+            }
+            else
+            {
+                foreach (AlunoDto dto in resposta.Objeto)
+                {
+                    Console.WriteLine(dto);
+                }
+            }
+        }
+
+        public static void ListarReprovados()
+        {
+            RespostaServico<List<AlunoDto>> resposta = ServicesAluno.ListarReprovados();
+
+            if (!resposta.Sucesso)
+            {
+                Console.WriteLine($"Erro ao listar alunos: {resposta.Mensagem}");
+            }
+
+            if ((resposta.Objeto != null && resposta.Objeto.Count == 0) || resposta.Objeto == null)
+            {
+                Console.WriteLine("Nenhum aluno reprovado.");
+            }
+            else
+            {
+                foreach (AlunoDto dto in resposta.Objeto)
+                {
+                    Console.WriteLine(dto);
                 }
             }
         }
@@ -138,7 +244,7 @@ namespace ConsoleUI.UI
                 Console.WriteLine("\nLista de Alunos Ativos:");
                 foreach (AlunoDto dto in resposta.Objeto)
                 {
-                    Console.WriteLine($"Nome: {dto.Nome} - Data de nascimento: {dto.DataNascimento} - CPF: {dto.Cpf} - Média: {dto.Media}");
+                    Console.WriteLine(dto);
                 }
             }
             
