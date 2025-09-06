@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.ValueObjects;
 using Repository;
 using Services.Dto;
 using Services.Dto.Serializers;
@@ -12,14 +13,14 @@ namespace Services
             return RepositoryAluno.TestarConexao();
         }
 
-        public static RespostaServico<bool> ExisteCpf(string cpf)
+        public static RespostaServico<bool> ExisteCpf(Cpf cpf)
         {
             (bool existe, bool sucesso, string mensagem) = RepositoryAluno.ExisteCpf(cpf);
 
             return new RespostaServico<bool>(existe, sucesso, mensagem);
         }
 
-        public static RespostaServico<AlunoDto?> BuscarAlunoCpf(string cpf)
+        public static RespostaServico<AlunoDto?> BuscarAlunoCpf(Cpf cpf)
         {
             (Aluno? aluno, bool sucesso, string mensagem) = RepositoryAluno.BuscarAlunoCpf(cpf);
             

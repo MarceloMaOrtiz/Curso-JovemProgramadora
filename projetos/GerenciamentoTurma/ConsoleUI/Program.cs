@@ -6,27 +6,25 @@ int menu;
 //Console.Write("Insira o num: ");
 //num = Convert.ToInt32(Console.ReadLine());
 
-try
-{
-    int num;
-    Console.Write("Insira o num: ");
-    num = Convert.ToInt32(Console.ReadLine());
-}
-catch (FormatException e)
-{
-    Console.WriteLine("Você não digitou um número.");
-    Console.WriteLine(e.Message);
-}
-catch (OverflowException)
-{
-       Console.WriteLine("Número muito grande ou muito pequeno.");
-}catch(Exception e)
-{
-    Console.WriteLine("Ocorreu um erro inesperado.");
-    Console.WriteLine(e.Message);
-}
-
-
+//try
+//{
+//    int num;
+//    Console.Write("Insira o num: ");
+//    num = Convert.ToInt32(Console.ReadLine());
+//}
+//catch (FormatException e)
+//{
+//    Console.WriteLine("Você não digitou um número.");
+//    Console.WriteLine(e.Message);
+//}
+//catch (OverflowException)
+//{
+//       Console.WriteLine("Número muito grande ou muito pequeno.");
+//}catch(Exception e)
+//{
+//    Console.WriteLine("Ocorreu um erro inesperado.");
+//    Console.WriteLine(e.Message);
+//}
 
 UIAluno.TestarConexao();
 

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models.ValueObjects;
 using Services;
 using Services.Dto;
 
@@ -32,10 +33,18 @@ namespace ConsoleUI.UI
 
         public static void RemoverAluno()
         {
-            string cpf;
+            Cpf cpf;
 
-            Console.Write("Informe o CPF do aluno a ser removido: ");
-            cpf = Console.ReadLine();
+            try {
+                Console.Write("Informe o CPF do aluno a ser removido: ");
+                cpf = new Cpf(Console.ReadLine() ?? "");
+            }
+            catch(ArgumentException ex)
+            {
+                Console.WriteLine($"CPF inválido: {ex.Message}");
+                return;
+            }
+            
 
             RespostaServico<AlunoDto?> resposta = ServicesAluno.BuscarAlunoCpf(cpf);
 
@@ -70,83 +79,70 @@ namespace ConsoleUI.UI
 
         public static void CadastroAluno()
         {
-            string cpf, nome;
+            string nome;
+            Cpf cpf;
             double media;
-            DateOnly dt_nascimento;
+            DataNascimento? dt_nascimento;
 
-            Console.Write("Preencha as informações a seguir:\nCPF: ");
-            cpf = Console.ReadLine();
-
-            RespostaServico<bool> resposta = ServicesAluno.ExisteCpf(cpf);
-
-            if (!resposta.Sucesso)
+            try
             {
-                Console.WriteLine($"Erro ao verificar CPF: {resposta.Mensagem}");
-                return;
-            }
+                Console.Write("Preencha as informações a seguir:\nCPF: ");
+                cpf = new Cpf(Console.ReadLine() ?? "");
 
-            if (!resposta.Objeto)
-            {
-                Console.Write("Nome: ");
-                nome = Console.ReadLine();
-                
-                Console.Write("Data de nascimento: ");
-                dt_nascimento = DateOnly.Parse(Console.ReadLine());
+                RespostaServico<bool> resposta = ServicesAluno.ExisteCpf(cpf);
 
-                Console.Write("Média: ");
-                media = Convert.ToDouble(Console.ReadLine());
-
-                AlunoDto dto = new AlunoDto
+                if (!resposta.Sucesso)
                 {
-                    Nome = nome,
-                    Cpf = cpf,
-                    DataNascimento = dt_nascimento,
-                    Media = media,
-                    Ativo = true
-                };
+                    Console.WriteLine($"Erro ao verificar CPF: {resposta.Mensagem}");
+                    return;
+                }
 
-                //(dto, sucesso, mensagem) = ServicesAluno.CadastrarAluno(dto);
-                RespostaServico<AlunoDto> respostaCadastro = ServicesAluno.CadastrarAluno(dto);
-
-                if (respostaCadastro.Objeto != null && respostaCadastro.Sucesso)
+                if (!resposta.Objeto)
                 {
-                    Console.WriteLine($"Aluno {respostaCadastro.Objeto.Nome} cadastrado com sucesso!");
+
+                    Console.Write("Nome: ");
+                    nome = Console.ReadLine() ?? "";
+
+                    Console.Write("Data de nascimento: ");
+                    dt_nascimento = new DataNascimento(DateOnly.Parse(Console.ReadLine() ?? ""));
+                      
+                    Console.Write("Média: ");
+                    media = Convert.ToDouble(Console.ReadLine());
+
+                    AlunoDto dto = new AlunoDto
+                    {
+                        Nome = nome,
+                        Cpf = cpf,
+                        DataNascimento = dt_nascimento,
+                        Media = media,
+                        Ativo = true
+                    };
+
+                    RespostaServico<AlunoDto> respostaCadastro = ServicesAluno.CadastrarAluno(dto);
+
+                    if (respostaCadastro.Objeto != null && respostaCadastro.Sucesso)
+                    {
+                        Console.WriteLine($"Aluno {respostaCadastro.Objeto.Nome} cadastrado com sucesso!");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Erro ao cadastrar aluno: {resposta.Mensagem}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"Erro ao cadastrar aluno: {resposta.Mensagem}");
+                    ReativarAluno(cpf);
                 }
             }
-            else
-            {
-                ReativarAluno(cpf);                    
-            }
+            catch(ArgumentException e) {
+                Console.WriteLine(e.Message);
+                return;
+            }  
         }
 
-        public static void BuscarAluno()
+        public static void ReativarAluno(Cpf cpf)
         {
-            string cpf;
-            Console.Write("Informe o CPF do aluno a ser buscado: ");
-            cpf = Console.ReadLine();
-            RespostaServico<AlunoDto?> resposta = ServicesAluno.BuscarAlunoCpf(cpf);
-            if (!resposta.Sucesso)
-            {
-                Console.WriteLine($"Erro ao buscar aluno: {resposta.Mensagem}");
-                return;
-            }
-            if(resposta.Objeto == null) {
-                Console.WriteLine("Aluno não encontrado.");
-                return;
-            }
-            // SE V ? (FAZ ISSO) : (FAZ AQUILO)
-            AlunoDto dto = resposta.Objeto;
-            Console.WriteLine($"{dto} - Ativo: {(dto.Ativo ? "Sim" : "Não")}");
-        }
-
-        public static void ReativarAluno(String cpf)
-        {
-            //(AlunoDto? dto, bool sucesso, string mensagem) = ServicesAluno.BuscarAlunoCpf(cpf);
-            RespostaServico<AlunoDto> respostaBusca = ServicesAluno.BuscarAlunoCpf(cpf);
+            RespostaServico<AlunoDto?> respostaBusca = ServicesAluno.BuscarAlunoCpf(cpf);
 
             if (!respostaBusca.Sucesso)
             {
@@ -156,7 +152,7 @@ namespace ConsoleUI.UI
             {
                 if (respostaBusca.Objeto.Ativo)
                 {
-                    Console.WriteLine("\nO CPF informado já existe!\n");
+                    Console.WriteLine("\nO CPF informado já está ativado!\n");
                 }
                 else
                 {
@@ -178,6 +174,37 @@ namespace ConsoleUI.UI
                     }
                 }
             }
+        }
+
+        public static void BuscarAluno()
+        {
+            Cpf cpf;
+
+            try
+            {
+                Console.Write("Informe o CPF do aluno a ser buscado: ");
+                cpf = new Cpf(Console.ReadLine() ?? "");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"CPF inválido: {ex.Message}");
+                return;
+            }
+
+            RespostaServico<AlunoDto?> resposta = ServicesAluno.BuscarAlunoCpf(cpf);
+
+            if (!resposta.Sucesso)
+            {
+                Console.WriteLine($"Erro ao buscar aluno: {resposta.Mensagem}");
+                return;
+            }
+            if(resposta.Objeto == null) {
+                Console.WriteLine("Aluno não encontrado.");
+                return;
+            }
+
+            AlunoDto dto = resposta.Objeto;
+            Console.WriteLine($"{dto} - Ativo: {(dto.Ativo ? "Sim" : "Não")}");
         }
 
         public static void ListarAprovados()

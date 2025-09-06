@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,9 @@ namespace Services.Dto
 
         public string Nome { get; set; } = "";
 
-        public DateOnly DataNascimento { get; set; }
+        public required DataNascimento DataNascimento { get; set; }
 
-        public string Cpf { get; set; } = "";
+        public Cpf Cpf { get; set; } = new Cpf("");
 
         public double Media { get; set; }
 

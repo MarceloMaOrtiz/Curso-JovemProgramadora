@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using Models.ValueObjects;
+
+namespace Models
 {
     public class Aluno
     {
@@ -6,9 +8,9 @@
 
         public string Nome { get; set; } = "";
 
-        public DateOnly DataNascimento { get; set; }
+        public required DataNascimento DataNascimento { get; set; }
 
-        public string Cpf { get; set; } = "";
+        public Cpf Cpf { get; set; } = new Cpf("");
 
         public double Media { get; set; }
 
