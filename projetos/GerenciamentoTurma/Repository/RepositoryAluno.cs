@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Microsoft.Extensions.Configuration;
+using Models;
 using Models.ValueObjects;
 using MySqlConnector;
 
@@ -6,7 +7,16 @@ namespace Repository
 {
     public static class RepositoryAluno
     {
-        private static readonly string _connectionString = "Server=localhost;User Id=root;Database=turma;password=root";
+        private static string _connectionString {
+            get
+            {
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(AppContext.BaseDirectory)
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                    .Build();
+                return config.GetConnectionString("DefaultConnection");
+            }
+        }
 
         public static bool TestarConexao()
         {

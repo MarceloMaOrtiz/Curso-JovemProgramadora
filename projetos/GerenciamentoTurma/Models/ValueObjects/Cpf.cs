@@ -12,12 +12,8 @@ namespace Models.ValueObjects
 
         public Cpf(string valor)
         {
-            Console.WriteLine("ANTES: " + valor);
-
             valor = valor.Replace(".", "").Replace("-", "").Trim();
             valor = new string(valor.Where(char.IsDigit).ToArray());
-
-            Console.WriteLine("DEPOIS: " + valor);
 
             if(valor == "00000000000")
             {
@@ -67,6 +63,11 @@ namespace Models.ValueObjects
             digito = digito + resto.ToString();
 
             return cpf.EndsWith(digito);
+        }
+
+        public override string ToString()
+        {
+            return $"{Valor.Substring(0, 3)}.{Valor.Substring(3, 3)}.{Valor.Substring(6, 3)}-{Valor.Substring(9, 2)}";
         }
     }
 }

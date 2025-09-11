@@ -11,11 +11,11 @@ namespace Services.Dto
     {
         public int Id { get; set; }
 
-        public string Nome { get; set; } = "";
+        public required string Nome { get; set; }
 
         public required DataNascimento DataNascimento { get; set; }
 
-        public Cpf Cpf { get; set; } = new Cpf("");
+        public required Cpf Cpf { get; set; }
 
         public double Media { get; set; }
 

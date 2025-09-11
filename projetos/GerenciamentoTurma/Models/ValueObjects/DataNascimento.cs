@@ -23,5 +23,10 @@ namespace Models.ValueObjects
             }
             Valor = valor;
         }
+
+        public override string ToString()
+        {
+            return Valor.ToString("dd/MM/yyyy");
+        }
     }
 }
