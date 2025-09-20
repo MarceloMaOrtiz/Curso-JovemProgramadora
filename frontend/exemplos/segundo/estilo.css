@@ -1,0 +1,90 @@
+﻿*
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    height: 100%;
+}
+
+.borda_preta{
+    border: 2px solid black;
+    padding: 5px;
+    margin: 10px;
+}
+
+.background_azul{
+    background-color: blue;
+}
+
+.background_vermelho {
+    background-color: red;
+}
+
+.background_gradient {
+    background: linear-gradient(to right bottom, yellow, blue 15%, red, green);
+}
+
+.background_imagem {
+    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url("pudge.jpg");
+    background-size: cover; /* Preenche todo o elemento, cortando se necessário */
+    background-repeat: no-repeat; /* Evita repetição da imagem */
+    background-position: center;
+    background-attachment: scroll;
+}
+
+.sombra_texto {
+    display: inline-block;
+    text-shadow: 2px 2px 4px black;
+    padding: 4px 6px 4px 6px;
+    margin: 10px;
+    color: blueviolet;
+}
+
+.descer{
+    position: relative;
+    top: 50px;
+}
+
+.fixo{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.sticky {
+    position: sticky;
+    top: 300px;
+}
+
+.card {
+    padding: 4px 6px;
+    max-height: 200px;
+    max-width: 300px;
+    border-top: 10px solid black;
+    border-right: 10px dotted green;
+    border-bottom: 10px dashed red;
+    border-left: 10px groove yellow;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Adiciona uma sombra ao redor do card */
+    background-color: white; /* Fundo branco para o card */
+    color: black; /* Texto preto para melhor contraste */
+    font-weight: bold;
+}
+
+.sessao2 {
+    text-align: center;
+    direction: rtl;
+}
+
+.alinhamento_vertical {
+    display: inline-block;
+}
+
+.libertinus-keyboard-regular {
+    font-family: "Libertinus Keyboard", system-ui;
+    font-weight: 400;
+    font-style: normal; 
+}
