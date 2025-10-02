@@ -45,7 +45,8 @@ body{
 
 .descer{
     position: relative;
-    top: 50px;
+    top: 40px;
+    left: 200px;
 }
 
 .fixo{
@@ -56,7 +57,7 @@ body{
 
 .sticky {
     position: sticky;
-    top: 300px;
+    top: 10px;
 }
 
 .card {
@@ -87,4 +88,36 @@ body{
     font-family: "Libertinus Keyboard", system-ui;
     font-weight: 400;
     font-style: normal; 
+}
+
+.quadradro{
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+.z_index{
+    z-index: 1;
+}
+
+.mover{
+    top: -50px;
+    left: 50px;
+}
+
+.overflow{
+    overflow: auto;
+}
+
+.caixa{
+    border: solid 2px black;
+    padding: 5px 10px;
+    width: 600px;
+    height: 200px;
+    margin-bottom: 200px;
+}
+
+.imagem{
+    width: 200px;
+    height: auto;
 }

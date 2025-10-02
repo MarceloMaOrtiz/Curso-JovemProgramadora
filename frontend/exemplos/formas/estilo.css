@@ -1,0 +1,45 @@
+﻿.triangle {
+    /*box-shadow:*/ 
+    padding: 5px 10px;
+    width: 65px;
+    height: 20px;
+    border-left: 60px solid red; /* metade da base */
+    border-right: 60px solid red; /* metade da base */
+    border-bottom: 100px solid #4caf50; /* altura e cor do triângulo */
+    border-top: 100px solid #4caf50;
+    margin: 40px auto;
+}
+
+.quadrado{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 100px;
+    background-color: blue;
+    border: solid 5px black;
+}
+
+.quadrado-rapido {
+    display: inline-block;
+    color: white;
+    background-color: blue;
+    border: solid 5px black;
+    padding: 43px 104.35px 43px 104.35px;
+}
+
+.quadrado-2 {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    border: solid 5px black;
+    color: white;
+}
+
+/*.quadrado::before{
+    content: "";
+
+}
+*/

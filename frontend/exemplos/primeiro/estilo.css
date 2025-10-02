@@ -62,3 +62,16 @@
     cursor: pointer;
     border-radius: 12px;
 }
+
+.recorte-personalizado {
+    width: 200px;
+    height: 200px;
+    background-position-y: center;
+    background-color: black;
+    background-image: url('pudge.jpg');
+    background-position-x: -100px;
+    background-size: 300px;
+    background-repeat: no-repeat;
+    clip-path: circle(50% at 50% 50%); /* Exemplo: um círculo perfeito no centro */
+    /* Outras opções: inset(), ellipse(), polygon() */
+}
