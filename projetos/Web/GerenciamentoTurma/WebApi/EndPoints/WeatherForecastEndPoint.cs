@@ -1,14 +1,15 @@
-﻿namespace WebApi.EndPoints
-{
-    public static class WeatherForecast
-    {
+﻿using WebApi.Models;
 
+namespace WebApi.EndPoints
+{
+    public static class WeatherForecastEndPoint
+    {
         public static void MapWeatherForecastEndpoints(this IEndpointRouteBuilder app)
         {
             var summaries = new[]
             {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+                "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            };
 
             app.MapGet("/weatherforecast", () =>
             {
