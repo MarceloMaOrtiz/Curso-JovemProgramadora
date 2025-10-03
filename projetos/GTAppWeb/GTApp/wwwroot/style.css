@@ -1,0 +1,120 @@
+﻿body {
+    background-color: #f0e5c9;
+}
+
+/*Cor areia: #f0e5c9
+  Cor verde: #9ba657
+  Cor mocca: #a68c69
+  Cor marrom: #594433
+*/
+
+h1 {
+    color: #594433;
+    text-align: center;
+    font-family: 'Quintessential';
+    font-size: 60px;
+}
+
+input {
+    border: 2px solid #594433;
+    padding: 5px;
+    border-radius: 5px;
+    border-radius: 12px;
+}
+
+.button {
+    border: 2px solid #594433;
+    color: #594433;
+    padding: 5px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #f0e5c9;
+    font-family: 'Quintessential';
+    border-radius: 12px;
+    font-size: 25px;
+    justify-content: center;
+}
+    .button:hover {
+        background-color: #9ba657;
+        color: #f0e5c9;
+    }
+
+.flex-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.caixa-opcoes {
+    border: 2px solid #594433;
+    padding: 5px;
+    background-color: #a68c69;
+    border-radius: 12px;
+}
+
+.caixa-cadastro {
+    border: 2px solid #594433;
+    padding: 20px;
+    background-color: #9ba657;
+    border-radius: 12px;
+    width: 500px;
+    font-family: 'Quintessential';
+    margin: 100px auto;
+    color: #f0e5c9;
+    font-size: 25px;
+}
+
+.caixa-cadastro input{
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.caixa-cadastro button{
+    display: block;
+    margin: 0 auto;
+}
+
+.quintessential-regular {
+    font-family: "Quintessential", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.campo{
+    margin-bottom: 2px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 2px;
+}
+
+.table {
+    margin: 20px auto;
+    border: 3px solid #594433;
+    border-collapse: collapse;
+    padding: 20px;
+    background-color: #9ba657;
+    font-family: 'Quintessential';
+    color: #f0e5c9;
+    font-size: 25px;
+}
+
+    .table th {
+        background-color: #a68c69;
+        border: 2px solid #594433;
+        padding: 8px;
+        text-align: center;
+        color: #f0e5c9;
+    }
+
+.table td{
+    border: 1px solid #594433;
+    padding: 8px;
+    text-align: left;
+    font-size: 20px;
+}
