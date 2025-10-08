@@ -5,8 +5,8 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
     const form = e.target;
     const data = {
         nome: form.nome.value,
-        dataNascimento: form.dataNascimento.value,
-        cpf: form.cpf.value,
+        dataNascimento: { valor: form.dataNascimento.value },
+        cpf: { valor: form.cpf.value },
         media: parseFloat(form.media.value)
     };
     try {
