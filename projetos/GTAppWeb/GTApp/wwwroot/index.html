@@ -19,12 +19,12 @@
         <a href="html/cadastrar_aluno.html" class="button">Cadastrar Aluno</a>
         <a href="html/remover_aluno.html" class="button">Remover Aluno</a>
         <a href="html/buscar_aluno.html" class="button">Buscar Aluno</a>
-        <a class="button">Listar todos os Alunos</a>
+        <button type="button" id="btnListar" class="button">Listar todos os Alunos</button>
         <a class="button">Listar todos os Alunos Aprovados</a>
         <a class="button">Listar todos os Alunos Reprovados</a>
     </div>
 
-    <table class="table" style="width:100%">
+    <!--<table class="table" style="width:100%">
         <tr>
             <th>Nome</th>
             <th>Data de Nascimento</th>
@@ -53,7 +53,22 @@
             <td>9</td>
             <td>Aprovado</td>
         </tr>
+    </table>-->
+
+    <table class="table" id="tabela" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Data de Nascimento</th>
+                <th>CPF</th>
+                <th>Média</th>
+                <th>Situação</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
     </table>
 
+    <script src="app.js"></script>
 </body>
 </html>

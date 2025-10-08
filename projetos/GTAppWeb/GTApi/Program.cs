@@ -2,6 +2,17 @@ using GTApi.Routers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configurando o CORS, responsável por permitir o acesso do front-end ao back-end
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://localhost:7119") // Porta do seu front-end
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -17,6 +28,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Habilita o CORS
+app.UseCors();
 
 app.MapWeatherForecastEndPoints();
 app.MapGTEndPoints();

@@ -18,6 +18,18 @@ namespace GTApi.Routers
             })
             .WithName("GetAlunos")
             .WithOpenApi();
+
+            app.MapPost("/gtapi/cadastro_aluno", (AlunoDto aluno) =>
+            {
+                var resposta = ServicesAluno.CadastrarAluno(aluno);
+                if (!resposta.Sucesso)
+                {
+                    return Results.Problem(resposta.Mensagem);
+                }
+                return Results.Ok(resposta);
+            })
+            .WithName("CadastroAluno")
+            .WithOpenApi();
         }
     }
 }
