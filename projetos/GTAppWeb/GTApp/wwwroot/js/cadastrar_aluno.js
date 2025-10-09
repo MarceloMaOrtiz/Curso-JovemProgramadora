@@ -24,6 +24,7 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
         if (json.sucesso) {
             alert('Aluno cadastrado com sucesso!');
             form.reset();
+            window.location.href = "/";
         } else {
             alert('Erro ao cadastrar: ' + json.mensagem);
         }

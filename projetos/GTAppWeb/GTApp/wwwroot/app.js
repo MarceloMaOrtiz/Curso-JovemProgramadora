@@ -39,3 +39,62 @@ document.getElementById("btnListar").addEventListener("click", async () => {
         alert('Erro ao listar: ' + err.message);
     }
 });
+
+document.getElementById("btnAprovados").addEventListener("click", async () => {
+
+    const urlApi = API + "aprovados"; // "https://localhost:7133/gtapi/aprovados"
+    const resp = await fetch(urlApi);
+    const json = await resp.json();
+    const ttabela = document.getElementById("tabela");
+    const tbody = ttabela.querySelector("tbody");
+    tbody.innerHTML = "";
+    try {
+        if (json.sucesso) {
+            json.objeto.forEach(aluno => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${aluno.id}</td>
+                    <td>${aluno.nome}</td>
+                    <td>${mascaraData(aluno.dataNascimento.valor)}</td>
+                    <td>${mascaraCpf(aluno.cpf.valor)}</td>
+                    <td>${aluno.media}</td>
+                    <td>${aluno.aprovado ? "Aprovado" : "Reprovado"}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } else {
+            alert("Erro: " + json.mensagem);
+        }
+    } catch (err) {
+        alert('Erro ao listar: ' + err.message);
+    }
+});
+
+document.getElementById("btnReprovados").addEventListener("click", async () => {
+    const urlApi = API + "reprovados"; // "https://localhost:7133/gtapi/reprovados"
+    const resp = await fetch(urlApi);
+    const json = await resp.json();
+    const ttabela = document.getElementById("tabela");
+    const tbody = ttabela.querySelector("tbody");
+    tbody.innerHTML = "";
+    try {
+        if (json.sucesso) {
+            json.objeto.forEach(aluno => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${aluno.id}</td>
+                    <td>${aluno.nome}</td>
+                    <td>${mascaraData(aluno.dataNascimento.valor)}</td>
+                    <td>${mascaraCpf(aluno.cpf.valor)}</td>
+                    <td>${aluno.media}</td>
+                    <td>${aluno.aprovado ? "Aprovado" : "Reprovado"}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } else {
+            alert("Erro: " + json.mensagem);
+        }
+    } catch (err) {
+        alert('Erro ao listar: ' + err.message);
+    }
+});
