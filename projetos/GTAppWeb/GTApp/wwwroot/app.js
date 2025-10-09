@@ -1,5 +1,12 @@
 ﻿const API = "https://localhost:7133/gtapi/"; // ajuste porta da WebApi
 
+<<<<<<< HEAD
+=======
+function alerta() {
+    return alert("Alerta Gerado!!!");
+}
+
+>>>>>>> gtapp
 function mascaraData(dataIso) {
     const [ano, mes, dia] = dataIso.split("-");
     return `${dia}/${mes}/${ano}`;
@@ -11,9 +18,16 @@ function mascaraCpf(cpf) {
 }
 
 document.getElementById("btnListar").addEventListener("click", async () => {
+<<<<<<< HEAD
     const urlApi = API + "alunos";
     const resp = await fetch(urlApi);
     const json = await resp.json();
+=======
+    const urlApi = API + "alunos"; // "https://localhost:7133/gtapi/alunos"
+    const resp = await fetch(urlApi);
+    const json = await resp.json();
+
+>>>>>>> gtapp
     const ttabela = document.getElementById("tabela");
     const tbody = ttabela.querySelector("tbody");
     tbody.innerHTML = "";
@@ -22,6 +36,7 @@ document.getElementById("btnListar").addEventListener("click", async () => {
             json.objeto.forEach(aluno => {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
+<<<<<<< HEAD
             <td>${aluno.id}</td>
             <td>${aluno.nome}</td>
             <td>${mascaraData(aluno.dataNascimento.valor)}</td>
@@ -29,12 +44,25 @@ document.getElementById("btnListar").addEventListener("click", async () => {
             <td>${aluno.media}</td>
             <td>${aluno.aprovado ? "Aprovado" : "Reprovado"}</td>
         `;
+=======
+                    <td>${aluno.id}</td>
+                    <td>${aluno.nome}</td>
+                    <td>${mascaraData(aluno.dataNascimento.valor)}</td>
+                    <td>${mascaraCpf(aluno.cpf.valor)}</td>
+                    <td>${aluno.media}</td>
+                    <td>${aluno.aprovado ? "Aprovado" : "Reprovado"}</td>
+                `;
+>>>>>>> gtapp
                 tbody.appendChild(tr);
             });
         } else {
             alert("Erro: " + json.mensagem);
         }
+<<<<<<< HEAD
     } catch(err) {
+=======
+    } catch (err) {
+>>>>>>> gtapp
         alert('Erro ao listar: ' + err.message);
     }
 });

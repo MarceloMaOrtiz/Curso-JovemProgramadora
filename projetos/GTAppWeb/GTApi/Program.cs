@@ -2,7 +2,10 @@ using GTApi.Routers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+<<<<<<< HEAD
 // Configurando o CORS, responsável por permitir o acesso do front-end ao back-end
+=======
+>>>>>>> gtapp
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
