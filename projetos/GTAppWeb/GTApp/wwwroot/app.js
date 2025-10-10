@@ -12,7 +12,7 @@ function mascaraCpf(cpf) {
 
 document.getElementById("btnListar").addEventListener("click", async () => {
 
-    const urlApi = API + "alunos"; // "https://localhost:7133/gtapi/alunos"
+    const urlApi = API + "alunos";
     const resp = await fetch(urlApi);
     const json = await resp.json();
     const ttabela = document.getElementById("tabela");
@@ -41,10 +41,10 @@ document.getElementById("btnListar").addEventListener("click", async () => {
 });
 
 document.getElementById("btnAprovados").addEventListener("click", async () => {
-
-    const urlApi = API + "aprovados"; // "https://localhost:7133/gtapi/aprovados"
+    const urlApi = API + "aprovados";
     const resp = await fetch(urlApi);
     const json = await resp.json();
+
     const ttabela = document.getElementById("tabela");
     const tbody = ttabela.querySelector("tbody");
     tbody.innerHTML = "";
@@ -71,9 +71,10 @@ document.getElementById("btnAprovados").addEventListener("click", async () => {
 });
 
 document.getElementById("btnReprovados").addEventListener("click", async () => {
-    const urlApi = API + "reprovados"; // "https://localhost:7133/gtapi/reprovados"
+    const urlApi = API + "reprovados";
     const resp = await fetch(urlApi);
     const json = await resp.json();
+
     const ttabela = document.getElementById("tabela");
     const tbody = ttabela.querySelector("tbody");
     tbody.innerHTML = "";
