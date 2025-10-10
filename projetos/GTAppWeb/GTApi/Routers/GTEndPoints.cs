@@ -12,7 +12,6 @@ namespace GTApi.Routers
             app.MapGet("/gtapi/buscar_aluno", (string cpf) =>
             {
                 Cpf cpfObj;
-                Console.WriteLine("cpf = " + cpf);
                 try
                 {
                     cpfObj = new Cpf(cpf);
@@ -32,6 +31,38 @@ namespace GTApi.Routers
             })
             .WithName("GetAlunoCpf").
             WithOpenApi();
+
+            app.MapPut("/gtapi/remover_aluno", (DesativarAlunoDto dto) =>
+            {
+                Cpf cpfObj;
+                try
+                {
+                    cpfObj = new Cpf(dto.Cpf);
+                    RespostaServico<AlunoDto?> resp = ServicesAluno.BuscarAlunoCpf(cpfObj);
+                    if (!resp.Sucesso)
+                    {
+                        return Results.Problem(resp.Mensagem);
+                    }
+                    else
+                    {
+                        if (resp.Objeto != null)
+                        {
+                            RespostaServico<AlunoDto> respDesativar = ServicesAluno.DesativarAluno(resp.Objeto);
+                            return Results.Ok(resp);
+                        }
+                        else
+                            return Results.NotFound(resp.Mensagem);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    RespostaServico<object> resposta = new RespostaServico<object>(null, false, ex.Message);
+                    return Results.BadRequest(resposta);
+                }
+            })
+            .WithName("PutRemoverAluno")
+            .WithOpenApi();
 
             app.MapGet("/gtapi/alunos", () =>
             {

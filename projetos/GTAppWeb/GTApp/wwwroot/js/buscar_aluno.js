@@ -41,7 +41,7 @@ document.getElementById('formBusca').addEventListener('submit', async function (
             } else {
                 alert('Erro ao buscar: ' + json.mensagem);
             }
-        } else if (response.status == 400) {
+        } else {
             alert(json.mensagem);
         }
     } catch (err) {
