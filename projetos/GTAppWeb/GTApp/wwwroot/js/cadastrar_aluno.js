@@ -5,7 +5,7 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
     const form = e.target;
     const data = {
         nome: form.nome.value,
-        dataNascimento: { valor: form.dataNascimento.value },
+        dataNascimento: { valor: form.data_nascimento.value },
         cpf: { valor: form.cpf.value },
         media: parseFloat(form.media.value)
     };
@@ -24,6 +24,7 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
         if (json.sucesso) {
             alert('Aluno cadastrado com sucesso!');
             form.reset();
+            window.location.href = '/';
         } else {
             alert('Erro ao cadastrar: ' + json.mensagem);
         }
