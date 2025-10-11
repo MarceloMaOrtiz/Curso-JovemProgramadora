@@ -1,5 +1,7 @@
-﻿using Services;
+﻿using Models.ValueObjects;
+using Services;
 using Services.Dto;
+using Services.Dto.Serializers;
 
 namespace GTApi.Routers
 {
@@ -43,14 +45,48 @@ namespace GTApi.Routers
             .WithName("GetReprovados")
             .WithOpenApi();
 
-            app.MapPost("/gtapi/cadastro_aluno", (AlunoDto aluno) =>
+            //gtapi/buscar_aluno?cpf=12225832757
+            app.MapGet("/gtapi/buscar_aluno", (string cpf) =>
             {
-                var resposta = ServicesAluno.CadastrarAluno(aluno);
-                if (!resposta.Sucesso)
+                try
                 {
-                    return Results.Problem(resposta.Mensagem);
+                    Cpf cpfObject = new Cpf(cpf);
+                    RespostaServico<AlunoDto?> resposta = ServicesAluno.BuscarAlunoCpf(cpfObject);
+                    if (!resposta.Sucesso)
+                    {
+                        return Results.Problem(resposta.Mensagem);
+                    }
+                    if(resposta.Objeto == null)
+                    {
+                        return Results.NotFound(resposta);
+                    }
+                    return Results.Ok(resposta);
+                }catch(Exception ex)
+                {
+                    RespostaServico<object> resp = new RespostaServico<object>(null, false, ex.Message);
+                    return Results.BadRequest(resp);
                 }
-                return Results.Ok(resposta);
+            })
+            .WithName("GetBuscarAluno")
+            .WithOpenApi();
+
+            app.MapPost("/gtapi/cadastro_aluno", (CadastroAlunoDto aluno) =>
+            {
+                try
+                {
+                    AlunoDto alunoDto = AlunoSerializer.CadastroToAlunoDto(aluno);
+                    var resposta = ServicesAluno.CadastrarAluno(alunoDto);
+                    if (!resposta.Sucesso)
+                    {
+                        return Results.Problem(resposta.Mensagem);
+                    }
+                    return Results.Ok(resposta);
+                }
+                catch (Exception ex)
+                {
+                    RespostaServico<object> resposta = new RespostaServico<object>(null, false, ex.Message);
+                    return Results.BadRequest(resposta);
+                }
             })
             .WithName("CadastroAluno")
             .WithOpenApi();

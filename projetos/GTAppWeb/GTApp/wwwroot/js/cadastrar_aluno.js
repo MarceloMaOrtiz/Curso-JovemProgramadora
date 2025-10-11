@@ -5,8 +5,8 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
     const form = e.target;
     const data = {
         nome: form.nome.value,
-        dataNascimento: { valor: form.data_nascimento.value },
-        cpf: { valor: form.cpf.value },
+        dataNascimento: form.data_nascimento.value,
+        cpf: form.cpf.value,
         media: parseFloat(form.media.value)
     };
     try {
@@ -18,7 +18,6 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
             },
             body: JSON.stringify(data)
         });
-
         const json = await response.json();
 
         if (json.sucesso) {

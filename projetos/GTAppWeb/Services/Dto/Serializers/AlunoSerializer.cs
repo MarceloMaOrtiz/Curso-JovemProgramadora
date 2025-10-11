@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,16 @@ namespace Services.Dto.Serializers
                 alunos.Add(DtoToAluno(dto));
             }
             return alunos;
+        }
+
+        public static AlunoDto CadastroToAlunoDto(CadastroAlunoDto cadastroDto)
+        {
+            return new AlunoDto {
+                Nome = cadastroDto.Nome,
+                DataNascimento = new DataNascimento(cadastroDto.DataNascimento),
+                Cpf = new Cpf(cadastroDto.Cpf),
+                Media = cadastroDto.Media
+            };
         }
     }
 }
