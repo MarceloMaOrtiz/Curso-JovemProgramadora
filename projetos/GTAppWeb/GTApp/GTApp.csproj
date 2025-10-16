@@ -6,4 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\js\buscar_aluno.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\buscar_aluno.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\buscar_aluno.js" />
+  </ItemGroup>
+
 </Project>
